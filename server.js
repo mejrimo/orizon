@@ -14,5 +14,15 @@ const db = mongoose.connection;
 db.on('error', (err) => console.error(err));
 db.once('open', () => console.log('Connected to Database'));
 
+// ROUTES USED BY THE APP
+const productsRouter = require('./routes/products');
+app.use('/products', productsRouter);
+
+const usersRouter = require('./routes/users');
+app.use('/users', usersRouter);
+
+const ordersRouter = require('./routes/orders');
+app.use('/orders', ordersRouter);
+
 // TELL THE APP TO LISTEN TO A PORT
 app.listen(port, () => console.log(`Server started on localhost:${port}!`));
