@@ -10,7 +10,7 @@ const getProduct = require('../middlewares/getProduct');
 // BUILT-IN MIDDLEWARE TO MANAGE JSON FILES
 router.use(express.json());
 
-//GET ALL PRODUCTS
+// GET ALL PRODUCTS
 router.get('/', async (req, res) => {
 	try {
 		const products = await Product.find();
