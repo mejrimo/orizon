@@ -14,6 +14,7 @@ router.use(express.json());
 router.get('/', async (req, res) => {
 	try {
 		const products = await Product.find();
+
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -27,12 +28,13 @@ router.get('/:id', getProduct, (req, res) => {
 
 // CREATE A NEW PRODUCT
 router.post('/', async (req, res) => {
-	const product = new Product({
-		name: req.body.name,
-	});
-
 	try {
+		const product = new Product({
+			name: req.body.name,
+		});
+
 		const newProduct = await product.save();
+
 		res.status(201).json(newProduct);
 	} catch (err) {
 		res.status(400).json({ message: err.message });
@@ -41,13 +43,15 @@ router.post('/', async (req, res) => {
 
 // UPDATE A PRODUCT
 router.patch('/:id', getProduct, async (req, res) => {
-	const { name } = req.body;
-	if (name != null) {
-		res.product.name = name;
-	}
-
 	try {
+		const { name } = req.body;
+
+		if (name) {
+			res.product.name = name;
+		}
+
 		const updatedProduct = await res.product.save();
+
 		res.json(updatedProduct);
 	} catch (err) {
 		res.status(400).json({ message: err.message });
@@ -58,6 +62,7 @@ router.patch('/:id', getProduct, async (req, res) => {
 router.delete('/:id', getProduct, async (req, res) => {
 	try {
 		await res.product.deleteOne({ _id: req.params.id });
+
 		res.json({ message: 'Deleted Product' });
 	} catch (err) {
 		res.status(500).json({ message: err.message });

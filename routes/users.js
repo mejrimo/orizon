@@ -14,6 +14,7 @@ router.use(express.json());
 router.get('/', async (req, res) => {
 	try {
 		const users = await User.find();
+
 		res.json(users);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -27,14 +28,15 @@ router.get('/:id', getUser, (req, res) => {
 
 // CREATE A NEW USER
 router.post('/', async (req, res) => {
-	const user = new User({
-		name: req.body.name,
-		surname: req.body.surname,
-		email: req.body.email,
-	});
-
 	try {
+		const user = new User({
+			name: req.body.name,
+			surname: req.body.surname,
+			email: req.body.email,
+		});
+
 		const newUser = await user.save();
+
 		res.status(201).json(newUser);
 	} catch (err) {
 		res.status(400).json({ message: err.message });
@@ -43,19 +45,23 @@ router.post('/', async (req, res) => {
 
 // UPDATE USER
 router.patch('/:id', getUser, async (req, res) => {
-	const { name, surname, email } = req.body;
-	if (name != null) {
-		res.user.name = name;
-	}
-	if (surname != null) {
-		res.user.surname = surname;
-	}
-	if (email != null) {
-		res.user.email = email;
-	}
-
 	try {
+		const { name, surname, email } = req.body;
+
+		if (name) {
+			res.user.name = name;
+		}
+
+		if (surname) {
+			res.user.surname = surname;
+		}
+
+		if (email) {
+			res.user.email = email;
+		}
+
 		const updatedUser = await res.user.save();
+
 		res.json(updatedUser);
 	} catch (err) {
 		res.status(400).json({ message: err.message });
@@ -66,6 +72,7 @@ router.patch('/:id', getUser, async (req, res) => {
 router.delete('/:id', getUser, async (req, res) => {
 	try {
 		await res.user.deleteOne({ _id: req.params.id });
+
 		res.json({ message: 'Deleted User' });
 	} catch (err) {
 		res.status(500).json({ message: err.message });

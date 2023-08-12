@@ -3,8 +3,10 @@ const User = require('../models/user');
 // FUNCTION TO FIND A SINGLE USER
 async function getUser(req, res, next) {
 	let user;
+
 	try {
 		user = await User.findById(req.params.id);
+
 		if (!user) {
 			return res.status(404).json({ message: 'Cannot find the user' });
 		}
