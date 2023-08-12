@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 // IMPORT USER, PRODUCT AND ORDER MODELS
 const Order = require('../models/order');
@@ -15,7 +16,24 @@ router.use(express.json());
 // GET ALL ORDERS
 router.get('/', async (req, res) => {
 	try {
-		const orders = await Order.find();
+		const orderDate = req.query.date ? new Date(req.query.date) : null;
+
+		const productsId = req.query.products ? req.query.products.split(',') : [];
+
+		const filter = {};
+
+		if (orderDate) {
+			filter.orderDate = orderDate;
+		}
+
+		if (productsId.length > 0) {
+			const productObjectIds = productsId.map(
+				(productId) => new mongoose.Types.ObjectId(productId)
+			);
+			filter['products.product'] = { $in: productObjectIds };
+		}
+
+		const orders = await Order.find(filter);
 
 		res.json(orders);
 	} catch (err) {
@@ -84,7 +102,7 @@ router.patch('/:id', getOrder, async (req, res) => {
 			res.order.products = products.map((p) => ({ product: p.product }));
 		}
 
-		const updatedOrder = await res.user.save();
+		const updatedOrder = await res.order.save();
 
 		res.json(updatedOrder);
 	} catch (err) {
