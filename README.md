@@ -129,6 +129,18 @@ npm start
 | `orderDate`  | `string` | Date to filter orders                |
 | `productsId` | `string` | IDs of the products to filter orders |
 
+```http
+  GET /api/orders?orderDate=date
+```
+
+```http
+  GET /api/orders?productsId=id1,id2
+```
+
+```http
+  GET /api/orders?orderDate=date&productsId=id1,id2
+```
+
 ## License
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
