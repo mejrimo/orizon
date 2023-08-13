@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
 	name: {
 		type: String,
-		required: true,
+		required: [true, "can't be blank"],
+		match: [/^[a-zA-Z\sÀ-ÿ']+$/, 'is invalid'],
 	},
 });
 
