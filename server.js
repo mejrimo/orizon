@@ -20,9 +20,9 @@ const usersRouter = require('./routes/users');
 const ordersRouter = require('./routes/orders');
 
 // USE ROUTES
-app.use('/products', productsRouter);
-app.use('/users', usersRouter);
-app.use('/orders', ordersRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/orders', ordersRouter);
 
 // TELL THE APP TO LISTEN TO A PORT
 app.listen(port, () => console.log(`Server started on localhost:${port}!`));
