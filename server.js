@@ -1,6 +1,6 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 // START SERVER APP THROUGH EXPRESS
 const app = express();
@@ -14,14 +14,14 @@ const db = mongoose.connection;
 db.on('error', (err) => console.error(err));
 db.once('open', () => console.log('Connected to Database'));
 
-// ROUTES USED BY THE APP
+// IMPORT ROUTES USED BY THE APP
 const productsRouter = require('./routes/products');
-app.use('/products', productsRouter);
-
 const usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
-
 const ordersRouter = require('./routes/orders');
+
+// USE ROUTES
+app.use('/products', productsRouter);
+app.use('/users', usersRouter);
 app.use('/orders', ordersRouter);
 
 // TELL THE APP TO LISTEN TO A PORT
