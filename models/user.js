@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
 		lowercase: true,
 		unique: true,
 		required: [true, "can't be blank"],
-		match: [/\S+@\s+\.\S+/, 'is invalid'],
+		match: [/\S+@\S+\.\S+/, 'is invalid'],
 	},
 });
 
