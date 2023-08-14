@@ -6,19 +6,14 @@ const User = require('../models/user');
 
 // CUSTOM MIDDLEWARE TO SEARCH FOR THE USER
 const getUser = require('../middlewares/getUser');
+const usersPagination = require('../middlewares/usersPagination');
 
 // BUILT-IN MIDDLEWARE TO MANAGE JSON FILES
 router.use(express.json());
 
 // GET ALL USERS
-router.get('/', async (req, res) => {
-	try {
-		const users = await User.find();
-
-		res.json(users);
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
+router.get('/', usersPagination, (req, res) => {
+	res.json(res.users);
 });
 
 // GET ONE USER

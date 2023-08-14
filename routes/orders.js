@@ -9,36 +9,14 @@ const Product = require('../models/product');
 
 // CUSTOM MIDDLEWARE TO SEARCH FOR THE ORDER
 const getOrder = require('../middlewares/getOrder');
+const ordersPagination = require('../middlewares/ordersPagination');
 
 // BUILT-IN MIDDLEWARE TO MANAGE JSON FILES
 router.use(express.json());
 
 // GET ALL ORDERS
-router.get('/', async (req, res) => {
-	try {
-		const orderDate = req.query.date ? new Date(req.query.date) : null;
-
-		const productsId = req.query.products ? req.query.products.split(',') : [];
-
-		const filter = {};
-
-		if (orderDate) {
-			filter.orderDate = orderDate;
-		}
-
-		if (productsId.length > 0) {
-			const productObjectIds = productsId.map(
-				(productId) => new mongoose.Types.ObjectId(productId)
-			);
-			filter['products.product'] = { $in: productObjectIds };
-		}
-
-		const orders = await Order.find(filter);
-
-		res.json(orders);
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
+router.get('/', ordersPagination, (req, res) => {
+	res.json(res.orders);
 });
 
 // GET ONE ORDER

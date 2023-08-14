@@ -6,19 +6,14 @@ const Product = require('../models/product');
 
 // CUSTOM MIDDLEWARE TO SEARCH FOR THE PRODUCT
 const getProduct = require('../middlewares/getProduct');
+const productsPagination = require('../middlewares/productsPagination');
 
 // BUILT-IN MIDDLEWARE TO MANAGE JSON FILES
 router.use(express.json());
 
 // GET ALL PRODUCTS
-router.get('/', async (req, res) => {
-	try {
-		const products = await Product.find();
-
-		res.json(products);
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
+router.get('/', productsPagination, (req, res) => {
+	res.json(res.products);
 });
 
 // GET ONE PRODUCT
