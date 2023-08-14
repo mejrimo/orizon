@@ -14,7 +14,7 @@ const db = mongoose.connection;
 db.on('error', (err) => console.error(err));
 db.once('open', () => {
 	console.log('Connected to Database');
-	// TELL THE APP TO LISTEN TO A PORT (CORRECTION: START THE SERVER ONLY AFTER THE CONNECTION TO DB)
+	// TELL THE APP TO LISTEN TO A PORT (CORRECTION: START THE SERVER ONLY AFTER THE CONNECTION TO DATABASE IS ESTABLISHED)
 	app.listen(port, () => console.log(`Server started on localhost:${port}!`));
 });
 
