@@ -23,7 +23,12 @@ const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const ordersRouter = require('./routes/orders');
 
+// IMPORT MIDDLEWARE FOR NOT FOUND ROUTES
+const notFound = require('./middlewares/notFound');
+
 // USE ROUTES
 app.use('/api/products', productsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/orders', ordersRouter);
+
+app.use(notFound);
