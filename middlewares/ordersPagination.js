@@ -28,10 +28,6 @@ async function ordersPagination(req, res, next) {
 		orders = await Order.find(filter)
 			.skip(page * perPage)
 			.limit(perPage);
-
-		if (!orders) {
-			return res.status(404).json({ message: 'Cannot find the orders' });
-		}
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}

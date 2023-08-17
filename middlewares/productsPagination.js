@@ -10,10 +10,6 @@ async function productsPagination(req, res, next) {
 		products = await Product.find()
 			.skip(page * productsPerPage)
 			.limit(productsPerPage);
-
-		if (!products) {
-			return res.status(404).json({ message: 'Cannot find the products' });
-		}
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}

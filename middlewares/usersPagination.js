@@ -10,10 +10,6 @@ async function usersPagination(req, res, next) {
 		users = await User.find()
 			.skip(page * usersPerPage)
 			.limit(usersPerPage);
-
-		if (!users) {
-			return res.status(404).json({ message: 'Cannot find the users' });
-		}
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
